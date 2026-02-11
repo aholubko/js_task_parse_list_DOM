@@ -26,12 +26,19 @@ function sortList(ul) {
 function getEmployees(ul) {
   const items = Array.from(ul.querySelectorAll('li'));
 
-  return items.map((li) => ({
-    name: li.textContent.trim(),
-    position: li.dataset.position,
-    salary: getSalary(li),
-    age: Number(li.dataset.age),
-  }));
+  return items.map((li) => {
+    const nameEl = li.querySelector('.name');
+    const positionEl = li.querySelector('.position');
+    const salaryEl = li.querySelector('.salary');
+    const ageEl = li.querySelector('.age');
+
+    return {
+      name: nameEl ? nameEl.textContent.trim() : li.textContent.trim(),
+      position: positionEl ? positionEl.dataset.position : li.dataset.position,
+      salary: salaryEl ? salaryEl.getSalary(li) : getSalary(li),
+      age: ageEl ? ageEl.Number(li.dataset.age) : Number(li.dataset.age),
+    };
+  });
 }
 
 sortList(list);
