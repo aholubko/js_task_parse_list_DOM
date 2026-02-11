@@ -14,12 +14,7 @@ function getSalary(li) {
 function sortList(ul) {
   const items = Array.from(ul.querySelectorAll('li'));
 
-  items.sort((a, b) => {
-    const salaryA = getSalary(a);
-    const salaryB = getSalary(b);
-
-    return salaryB - salaryA;
-  });
+  items.sort((a, b) => getSalary(b) - getSalary(a));
 
   ul.innerHTML = '';
 
@@ -31,15 +26,16 @@ function sortList(ul) {
 function getEmployees(ul) {
   const items = Array.from(ul.querySelectorAll('li'));
 
-  return items.map((li) => {
-    return {
-      name: li.textContent.trim(),
-      position: li.dataset.position,
-      salary: getSalary(li),
-      age: Number(li.dataset.age),
-    };
-  });
+  return items.map((li) => ({
+    name: li.textContent.trim(),
+    position: li.dataset.position,
+    salary: getSalary(li),
+    age: Number(li.dataset.age),
+  }));
 }
 
 sortList(list);
-getEmployees(list);
+
+const employees = getEmployees(list);
+
+window.employees = employees;
